@@ -1,2 +1,2 @@
 # t-selling-service
-Build golang backed structure
+Build golang back end structure
