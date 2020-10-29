@@ -1,0 +1,32 @@
+@startuml
+title UserFunctionFlow
+actor "FrontEnd" as FE
+participant "t-selling-service" as sellingService
+participant "mariaDB" as mariaDB
+== Begin user function flow(PATH:/api/v1/admin/users [POST]) ==
+FE -> sellingService: Insert User
+sellingService -> sellingService: 1.Validate request\n 2. Validate data: userId exist or not\n 3. If userId exist, reponse error.
+sellingService -> mariaDB: Insert into database (users)
+mariaDB -> sellingService: Response error (If not error, response nil)
+sellingService -> FE:  Response error (If not error, response nil)
+
+== Begin user function flow(PATH:/api/v1/admin/users [PUT]) ==
+FE -> sellingService: Update User
+sellingService -> sellingService: 1.Validate request\n 2. Validate data: userId exist or not\n 3. If userId not exist, reponse error.
+sellingService -> mariaDB: Update into database (users)
+mariaDB -> sellingService:  Response error (If not error, response nil)
+sellingService -> FE:  Response error (If not error, response nil)
+
+== Begin user function flow(PATH:/api/v1/admin/users) [DELETE]==
+FE -> sellingService: Delete User
+sellingService -> sellingService: 1.Validate request\n 2. Validate data: userId exist or not\n 3. If userId not exist, reponse error.
+sellingService -> mariaDB: Delete that user
+mariaDB -> sellingService:  Response error (If not error, response nil)
+sellingService -> FE:  Response error (If not error, response nil)
+
+== Begin user function flow(PATH:/api/v1/admin/users) [GET]==
+FE -> sellingService: Get user information
+sellingService -> mariaDB: Get user information
+mariaDB -> sellingService: Response the user list and the error (If yes)
+sellingService -> FE: Response the user list and the error (If yes)
+@enduml
